@@ -6,18 +6,18 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
   new File(reportsDir).mkdirs()
 	def inputHelper = new CommandLineHelper()
 
-  def target = "http://localhost:8080"
+  def target = "http://localhost:8080/"
   def numberOfUsers = 1
   def threads = []
-  def browser = ""
+  def browser = "htmlunit"
   def pattern = ""
   def highlights
   
   while(true){
-    highlights = "" // reset
+    highlights = [] // reset
     def line
     println ""
-		println "Ready to functional load tests"
+		println "Ready to load test funky style"
 		println " - Just hit return on the following questions to use defaults"
 		println " - Ctrl+c to exit"
 		println ""
@@ -34,7 +34,7 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
     if (line) pattern = line
     println ""
     println "What browser [$browser]?"
-    println "Alternatives: [chrome, firefox]"
+    println "Possibles: [chrome, firefox, htmlunit]"
     line = inputHelper.userInput("")?.trim()
     if (line) browser = line
     println ""
@@ -43,7 +43,7 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
       threads << Thread.start {
         def reportDir = new File(reportsDir + '/' + 'user' + threadNum).absolutePath      
         def cmd = """grails -Dgrails.project.test.reports.dir=${reportDir} test-app -baseUrl="$target" functional: $pattern"""
-        if (browser) cmd += " -Dgeb.env=$browser"
+        if (browser != "htmlunit") cmd += " -Dgeb.env=$browser"
         def builder = new ProcessBuilder(cmd.split(' '))      
         def process = builder.redirectErrorStream(true).start()
         def testsOutput = new BufferedReader(new InputStreamReader(process.in))
@@ -67,7 +67,7 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
 
 }
 
-exhaust = { Reader reader, String prefix, String highlights, boolean noWait = false, Closure stopAt = null ->
+exhaust = { Reader reader, String prefix, List highlights, boolean noWait = false, Closure stopAt = null ->
 	if (noWait && !reader.ready()) {
 		return null
 	}
@@ -76,7 +76,9 @@ exhaust = { Reader reader, String prefix, String highlights, boolean noWait = fa
 	while (line != null) {
     def lineWithPrefix = "${prefix}${line}"
 		println lineWithPrefix
-    if (line.contains('Tests passed:') || line.contains('Tests failed:')) hightlights += "\n $lineWithPrefix"
+    if (line.toLowerCase().contains('tests passed') || line.toLowerCase().contains('tests failed')) { 
+      highlights << lineWithPrefix
+    }
 		if (stopAt) {
 			def stopped = stopAt(line)
 			if (stopped) {

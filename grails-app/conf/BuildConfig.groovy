@@ -10,8 +10,8 @@ grails.project.dependency.resolution = {
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
 
-    def gebVersion = "0.7.0"
-    def seleniumVersion = "2.25.0"
+    // def gebVersion = "0.7.0"
+    // def seleniumVersion = "2.25.0"
 
     repositories {
         grailsCentral()
@@ -26,13 +26,13 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // Geb functional test dependencies
-        test "org.codehaus.geb:geb-spock:$gebVersion"
-        test "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
-        test "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
-        test "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
-        test("org.seleniumhq.selenium:selenium-htmlunit-driver:$seleniumVersion") {
-          exclude 'xml-apis'
-        }
+        // test "org.codehaus.geb:geb-spock:$gebVersion"
+        // test "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+        // test "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+        // test "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+        // test("org.seleniumhq.selenium:selenium-htmlunit-driver:$seleniumVersion") {
+        //   exclude 'xml-apis'
+        // }
     }
 
     plugins {
@@ -41,7 +41,7 @@ grails.project.dependency.resolution = {
             /*":rest-client-builder:1.0.2"*/) {
         export = false
       }
-      test ":geb:0.6.3"
-      test ":spock:0.6"
+      // test ":geb:0.6.3"
+      // test ":spock:0.6"
     }
 }
