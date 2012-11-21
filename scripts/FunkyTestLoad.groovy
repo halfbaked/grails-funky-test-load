@@ -6,7 +6,7 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
   new File(reportsDir).mkdirs()
 	def inputHelper = new CommandLineHelper()
 
-  def target = "https://www.staging.on.dolicloud.com/"
+  def target = "http://localhost:8080"
   def numberOfUsers = 1
   def threads = []
   def browser = ""
