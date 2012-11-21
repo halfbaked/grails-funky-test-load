@@ -12,19 +12,21 @@ class FunkyTestLoadGrailsPlugin {
 
     // TODO Fill in these fields
     def title = "Funky Test Load Plugin" // Headline display name of the plugin
-    def author = "Your name"
-    def authorEmail = ""
+    def author = "Eamonn O'Connell"
+    def authorEmail = "twitter:@34m0"
     def description = '''\
-Brief summary/description of the plugin.
+Enables functional tests to be used as light load tests.
+It is very opinionated, and assumes you are using Geb and Spock - the functional testing tools de jour. 
+It will include the necessary dependencies for Geb and Spock. This should be handy for newbies, but a pain for those who want more control.
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/funky-test-load"
+    def documentation = "https://github.com/halfbaked/grails-funky-test-load"
 
     // Extra (optional) plugin metadata
 
     // License: one of 'APACHE', 'GPL2', 'GPL3'
-//    def license = "APACHE"
+    def license = "APACHE"
 
     // Details of company behind the plugin (if there is one)
 //    def organization = [ name: "My Company", url: "http://www.my-company.com/" ]
@@ -33,10 +35,10 @@ Brief summary/description of the plugin.
 //    def developers = [ [ name: "Joe Bloggs", email: "joe@bloggs.net" ]]
 
     // Location of the plugin's issue tracker.
-//    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
+    def issueManagement = [ system: "Github", url: "https://github.com/halfbaked/grails-funky-test-load/issues" ]
 
     // Online location of the plugin's browseable source code.
-//    def scm = [ url: "http://svn.codehaus.org/grails-plugins/" ]
+    def scm = [ url: "https://github.com/halfbaked/grails-funky-test-load" ]
 
     def doWithWebDescriptor = { xml ->
         // TODO Implement additions to web.xml (optional), this event occurs before

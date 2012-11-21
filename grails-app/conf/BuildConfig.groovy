@@ -9,6 +9,10 @@ grails.project.dependency.resolution = {
         // excludes 'ehcache'
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+
+    def gebVersion = "0.7.0"
+    def seleniumVersion = "2.25.0"
+
     repositories {
         grailsCentral()
         // uncomment the below to enable remote dependency resolution
@@ -21,16 +25,23 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
     dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
-        // runtime 'mysql:mysql-connector-java:5.1.18'
+        // Geb functional test dependencies
+        test "org.codehaus.geb:geb-spock:$gebVersion"
+        test "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+        test "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+        test "org.seleniumhq.selenium:selenium-ie-driver:$seleniumVersion"
+        test("org.seleniumhq.selenium:selenium-htmlunit-driver:$seleniumVersion") {
+          exclude 'xml-apis'
+        }
     }
 
     plugins {
-        build(":tomcat:$grailsVersion",
-              ":release:2.0.3",
-              ":rest-client-builder:1.0.2") {
-            export = false
-        }
+      build(//":tomcat:$grailsVersion",
+            ":release:2.0.3",
+            /*":rest-client-builder:1.0.2"*/) {
+        export = false
+      }
+      test ":geb:0.6.3"
+      test ":spock:0.6"
     }
 }
