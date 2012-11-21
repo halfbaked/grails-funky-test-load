@@ -22,7 +22,7 @@ To use Chrome you have to install a chrome driver natively on your machine. For 
 
 Credits
 -------
-[a-script-to-run-grails-functional-tests-in-parallel blog post](http://fbflex.wordpress.com/2011/12/01/a-script-to-run-grails-functional-tests-in-parallel/)
-[grails-functional-test-development plugin)](https://github.com/alkemist/grails-functional-test-development)
+* [Run Grails functional tests in parallel blog post](http://fbflex.wordpress.com/2011/12/01/a-script-to-run-grails-functional-tests-in-parallel/)
+* [Grails functional-test-development plugin](https://github.com/alkemist/grails-functional-test-development)
 
 
