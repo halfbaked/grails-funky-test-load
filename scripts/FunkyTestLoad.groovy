@@ -49,7 +49,7 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
 
       (             ____
            )    .;'`    `';,
-          (    //          \\
+          (    //          \\\\
            ,_ ||  _..-n-.._ ||
           (c)\\||-"'-.....-"-;|
            \\  ;'             Y
