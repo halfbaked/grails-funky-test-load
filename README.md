@@ -3,7 +3,7 @@ grails-funky-test-load
 
 Intro
 -----
-Run functional tests as light load tests. Once you install this plugin, your application will be able to run functional tests in parallel, provided you have already done the necessary, to setup your application to run functional tests. If you are not sure what is required checkout [this blog post on setting up functional tests in Grails with Geb and Spock](http://programming34m0.blogspot.fr/2012/11/getting-started-with-grails-functional.html).
+Run functional tests as light load tests. Once you install this plugin, your application will be able to run functional tests in parallel, provided you have already done the necessary, to setup your application to run functional tests. If you are not sure what is required checkout [this blog post on setting up functional tests in Grails with Geb and Spock](http://www.34m0.com/2012/11/getting-started-with-grails-functional.html).
 
 
 Usage
