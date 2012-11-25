@@ -1,6 +1,6 @@
 class FunkyTestLoadGrailsPlugin {
     // the plugin version
-    def version = "0.3.7"
+    def version = "0.3.8"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.1 > *"
     // the other plugins this plugin depends on
@@ -46,7 +46,6 @@ It will include the necessary dependencies for Geb and Spock. This should be han
 
     def doWithSpring = {
         // TODO Implement runtime spring config (optional)
-      println "Doing with Spring!"
     }
 
     def doWithDynamicMethods = { ctx ->

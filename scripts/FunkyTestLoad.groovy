@@ -1,4 +1,5 @@
 import org.codehaus.groovy.grails.cli.CommandLineHelper
+import java.util.concurrent.locks.ReentrantLock 
 
 
 target(default: "Runs functional tests in parallel inorder to simulate concurrent users") {
@@ -11,6 +12,8 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
 
   def target = "http://localhost:8080/"
   def numberOfUsers = 1
+  def numberOfUsersWaiting = 1
+  def numberOfThreads = 1
   def browser = "htmlunit"
   def pattern = ""
   
@@ -31,15 +34,20 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
         askForTarget = false
       }
     }
-		//println ""
+    
     println "How many users [$numberOfUsers]?"
     line = inputHelper.userInput("")?.trim()
     if (line) numberOfUsers = new Integer(line)
-		//println ""
+    numberOfUsersWaiting = numberOfUsers
+		
+    println "How many threads [$numberOfThreads]?"
+    line = inputHelper.userInput("")?.trim()
+    if (line) numberOfThreads = new Integer(line)  
+
     println "Want a test pattern [$pattern]?"
     line = inputHelper.userInput("")?.trim()
     if (line) pattern = line
-    //println ""
+    
     println "What browser [$browser]?"
     println "Possibles: [chrome, firefox, htmlunit]"
     line = inputHelper.userInput("")?.trim()
@@ -63,28 +71,46 @@ target(default: "Runs functional tests in parallel inorder to simulate concurren
      This can take a while. Put the kettle on. Relax.
      
     """
-    
-    numberOfUsers.times { threadNum ->
+
+    def lock = new ReentrantLock()
+    numberOfThreads.times { threadNum ->
       threads << Thread.start {
-        def logPrefix = "User $threadNum"
-        def reportDir = new File(reportsDir + '/' + 'user' + threadNum).absolutePath      
-        def cmd = """grails -Dgrails.project.test.reports.dir=${reportDir} test-app -baseUrl="$target" functional: $pattern"""
-        if (browser != "htmlunit") cmd += " -Dgeb.env=$browser"
-        def builder = new ProcessBuilder(cmd.split(' '))      
-        println "$logPrefix| $cmd"
-        def process = builder.redirectErrorStream(true).start()
-        def testsOutput = new BufferedReader(new InputStreamReader(process.in))
-        exhaust(testsOutput, logPrefix, highlights)      
+        def keepgoing = true
+        while (keepgoing) {
+          def userId 
+          lock.lock()        
+          try {     
+            if (numberOfUsersWaiting > 0) {
+              userId = numberOfUsersWaiting--
+            } else { 
+              keepgoing = false
+              println "Thread [$threadNum] no more users waiting. I'm done!"
+              break
+            }
+          } finally { 
+            lock.unlock() 
+          }                   
+          def logPrefix = "Thread[$threadNum] User [$userId]"
+          println "$logPrefix| starting"
+          def reportDir = new File(reportsDir + '/' + 'user' + userId).absolutePath      
+          def cmd = """grails -Dgrails.project.test.reports.dir=${reportDir} test-app -baseUrl="$target" functional: $pattern"""
+          if (browser != "htmlunit") cmd += " -Dgeb.env=$browser"
+          def builder = new ProcessBuilder(cmd.split(' '))      
+          println "$logPrefix| $cmd"
+          def process = builder.redirectErrorStream(true).start()
+          def testsOutput = new BufferedReader(new InputStreamReader(process.in))
+          exhaust(testsOutput, logPrefix, highlights)  
+          println "$logPrefix| finished"
+        }
       }
     }
-    threads.each {
-        it.join()
-    }
+    threads.each { it.join() }
+
     def hr = "="*40
     println hr
     println hr     
     println "The time is now ${new Date().format("HH:mm:ss")}" 
-    println "All [$numberOfUsers] user threads  complete"
+    println "All [$numberOfUsers] users finished testing. Here are the results:"
     if (highlights){ 
       println hr
       highlights.each { println it }
