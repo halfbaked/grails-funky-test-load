@@ -5,9 +5,9 @@ class FunkyTestLoadGrailsPlugin {
     def author = "Eamonn O'Connell"
     def authorEmail = "twitter:@34m0"
     def description = '''\
-Enables functional tests to be used as light load tests.
-It is very opinionated, and assumes you are using Geb and Spock - the functional testing tools de jour. 
-It will include the necessary dependencies for Geb and Spock. This should be handy for newbies, but a pain for those who want more control.
+Enables functional tests to be used as light load tests. Once you install this plugin, your application will 
+be able to run functional tests in parallel, provided you have already done the necessary, to setup your 
+application to run functional tests.
 '''
 
     def documentation = "https://github.com/halfbaked/grails-funky-test-load"
