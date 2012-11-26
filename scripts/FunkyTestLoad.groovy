@@ -1,8 +1,7 @@
 import org.codehaus.groovy.grails.cli.CommandLineHelper
 import java.util.concurrent.locks.ReentrantLock 
 
-
-target(default: "Runs functional tests in parallel inorder to simulate concurrent users") {
+target(funkyTestLoad: "Runs functional tests in parallel inorder to simulate concurrent users") {
 
   def reportsDir = 'target/test-reports/functestload'  
   new File(reportsDir).mkdirs()
@@ -165,3 +164,4 @@ validateUrl = { String url ->
   } 
 }
 
+setDefaultTarget funkyTestLoad
